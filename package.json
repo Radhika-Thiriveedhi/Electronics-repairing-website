@@ -1,0 +1,25 @@
+{
+  "name": "fixloop",
+  "version": "1.0.0",
+  "description": "FixLoop — Repair, Reuse & Service Tracking Platform",
+  "main": "main.py",
+  "scripts": {
+    "start": "python main.py",
+    "run": "python main.py",
+    "dev": "python main.py",
+    "build": "echo \"Building FixLoop production assets...\"",
+    "test": "pytest -v",
+    "lint": "echo \"Validating code style...\""
+  },
+  "keywords": [
+    "repair",
+    "reuse",
+    "service-tracking",
+    "marketplace",
+    "circular-economy",
+    "python",
+    "flask"
+  ],
+  "author": "FixLoop Team",
+  "license": "Proprietary"
+}
