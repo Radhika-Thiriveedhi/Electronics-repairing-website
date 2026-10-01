@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "fixloop"
+version = "1.0.0"
+description = "FixLoop — Repair, Reuse & Service Tracking Platform"
+authors = ["FixLoop Team <team@fixloop.org>"]
+readme = "README.md"
+license = "Proprietary"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+Flask = ">=3.0.0"
+Flask-Login = ">=0.6.3"
+Flask-WTF = ">=1.2.1"
+email-validator = ">=2.1.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=8.0.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
