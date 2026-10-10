@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Service Categories & Repair Shops — FixLoop{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 25px;">
+    <h1 style="font-size: 2rem; font-weight: 700;">Service Categories & Repair Hubs</h1>
+    <p style="color: var(--text-muted);">Explore service capabilities and certified repair centers available on FixLoop.</p>
+</div>
+
+<!-- Category Grid -->
+<div class="card">
+    <h2 class="card-title"><i class="fa-solid fa-list-check" style="color: var(--primary-color);"></i> Repair Categories</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-top: 15px;">
+        {% for cat in categories %}
+        <div style="border: 1px solid var(--border-color); padding: 20px; border-radius: 8px; background: #fafafa;">
+            <div style="font-size: 1.8rem; color: var(--primary-color); margin-bottom: 10px;">
+                <i class="fa-solid fa-{{ cat.icon }}"></i>
+            </div>
+            <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 6px;">{{ cat.name }}</h3>
+            <p style="font-size: 0.88rem; color: #64748b; margin-bottom: 12px;">{{ cat.desc }}</p>
+            <a href="{{ url_for('customer.new_repair') }}" class="btn btn-outline btn-sm"><i class="fa-solid fa-plus"></i> Request Service</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Shop Directory -->
+<div class="card">
+    <h2 class="card-title"><i class="fa-solid fa-shop" style="color: var(--secondary-color);"></i> Registered Repair Shops</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px;">
+        {% for shop in shops %}
+        <div style="border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; background: #fff;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                <h3 style="font-size: 1.15rem; font-weight: 700;">{{ shop.name }}</h3>
+                <span class="badge" style="background: #fef3c7; color: #d97706;"><i class="fa-solid fa-star"></i> {{ shop.rating }}</span>
+            </div>
+            <p style="font-size: 0.88rem; color: #64748b; margin-bottom: 10px;"><i class="fa-solid fa-location-dot"></i> {{ shop.address }}</p>
+            <p style="font-size: 0.9rem; margin-bottom: 12px;">{{ shop.description }}</p>
+            <p style="font-size: 0.85rem; font-weight: 600; color: #475569; margin-bottom: 10px;"><i class="fa-solid fa-phone"></i> {{ shop.contact }}</p>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px;">
+                {% for c in shop.categories %}
+                <span class="badge badge-received">{{ c }}</span>
+                {% endfor %}
+            </div>
+            <a href="{{ url_for('customer.new_repair') }}" class="btn btn-primary btn-sm btn-block"><i class="fa-solid fa-paper-plane"></i> Book Service with {{ shop.name }}</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
