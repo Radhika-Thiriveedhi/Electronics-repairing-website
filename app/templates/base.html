@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}FixLoop — Repair, Reuse & Service Tracking Platform{% endblock %}</title>
+    <!-- Modern Font & Styling -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="{{ url_for('public.home') }}" class="logo">
+                <i class="fa-solid fa-arrows-rotate logo-icon"></i>
+                <span class="logo-text">Fix<span class="logo-accent">Loop</span></span>
+            </a>
+            
+            <nav class="nav-links">
+                <a href="{{ url_for('public.home') }}"><i class="fa-solid fa-house"></i> Home</a>
+                <a href="{{ url_for('public.services') }}"><i class="fa-solid fa-wrench"></i> Repair Shops & Services</a>
+                
+                {% if current_user.is_authenticated %}
+                    {% if current_user.role == 'customer' %}
+                        <a href="{{ url_for('customer.dashboard') }}" class="nav-btn-highlight"><i class="fa-solid fa-gauge-high"></i> Customer Dashboard</a>
+                        <a href="{{ url_for('customer.new_repair') }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus"></i> New Request</a>
+                    {% elif current_user.role == 'shop' %}
+                        <a href="{{ url_for('shop.dashboard') }}" class="nav-btn-highlight"><i class="fa-solid fa-store"></i> Shop Dashboard</a>
+                    {% elif current_user.role == 'technician' %}
+                        <a href="{{ url_for('technician.dashboard') }}" class="nav-btn-highlight"><i class="fa-solid fa-toolbox"></i> Technician Workspace</a>
+                    {% elif current_user.role == 'owner' %}
+                        <a href="{{ url_for('owner.dashboard') }}" class="nav-btn-highlight"><i class="fa-solid fa-chart-line"></i> Owner Analytics</a>
+                    {% endif %}
+                    
+                    <div class="user-menu">
+                        <span class="user-name"><i class="fa-solid fa-user-circle"></i> {{ current_user.name }} ({{ current_user.role|title }})</span>
+                        <a href="{{ url_for('auth.logout') }}" class="btn btn-outline btn-sm"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</a>
+                    </div>
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}" class="btn btn-outline btn-sm"><i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-sm"><i class="fa-solid fa-user-plus"></i> Get Started</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <!-- Quick Demo Bar for immediate role switching during review -->
+    <div class="demo-bar">
+        <div class="container demo-bar-content">
+            <span class="demo-title"><i class="fa-solid fa-bolt"></i> Quick Switch Demo Roles:</span>
+            <div class="demo-buttons">
+                <a href="{{ url_for('auth.demo_login', role='customer') }}" class="demo-btn customer-btn"><i class="fa-solid fa-user"></i> Customer</a>
+                <a href="{{ url_for('auth.demo_login', role='shop') }}" class="demo-btn shop-btn"><i class="fa-solid fa-shop"></i> Repair Shop Owner</a>
+                <a href="{{ url_for('auth.demo_login', role='technician') }}" class="demo-btn tech-btn"><i class="fa-solid fa-screwdriver-wrench"></i> Technician</a>
+                <a href="{{ url_for('auth.demo_login', role='owner') }}" class="demo-btn owner-btn"><i class="fa-solid fa-shield-halved"></i> Platform Owner</a>
+            </div>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <div class="container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                <i class="fa-solid fa-circle-info"></i> {{ message }}
+                                <button type="button" class="close-btn" onclick="this.parentElement.style.display='none';">&times;</button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <h3><i class="fa-solid fa-arrows-rotate"></i> FixLoop</h3>
+                <p>Repair, Reuse & Service Tracking Platform. Extending product lifespan, reducing electronic waste, and empowering local service hubs.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="{{ url_for('public.home') }}">Home</a></li>
+                    <li><a href="{{ url_for('public.services') }}">Service Categories</a></li>
+                    <li><a href="{{ url_for('auth.login') }}">Account Sign In</a></li>
+                    <li><a href="{{ url_for('auth.register') }}">Partner Registration</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Platform Trust</h4>
+                <p><i class="fa-solid fa-shield-check"></i> Verified Repair Technicians</p>
+                <p><i class="fa-solid fa-hand-holding-dollar"></i> Transparent Price Quotes</p>
+                <p><i class="fa-solid fa-leaf"></i> Sustainable E-Waste Mitigation</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container text-center">
+                <p>&copy; 2026 FixLoop Platform. Built with Python & Flask.</p>
+            </div>
+        </div>
+    </footer>
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
