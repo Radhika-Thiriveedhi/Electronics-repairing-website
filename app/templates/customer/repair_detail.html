@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+
+{% block title %}Ticket {{ repair.id }} — FixLoop{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 20px;">
+    <a href="{{ url_for('customer.dashboard') }}" style="color: var(--text-muted); text-decoration: none;">
+        <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+    </a>
+</div>
+
+<!-- Header Card -->
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 15px;">
+        <div>
+            <span class="badge badge-received" style="margin-bottom: 8px;">Ticket # {{ repair.id }}</span>
+            <h1 style="font-size: 1.8rem; font-weight: 700;">{{ repair.item_name }}</h1>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">
+                <i class="fa-solid fa-shop"></i> {{ repair.shop_name }} &bull; Submitted on {{ repair.created_at[:10] }}
+            </p>
+        </div>
+        <div>
+            <span class="badge badge-{{ repair.status|lower|replace(' ', '-') }}" style="font-size: 0.9rem; padding: 8px 16px;">
+                Current Status: {{ repair.status }}
+            </span>
+        </div>
+    </div>
+</div>
+
+<!-- Status Workflow Timeline -->
+<div class="card">
+    <h3 class="card-title"><i class="fa-solid fa-bars-staggered" style="color: var(--primary-color);"></i> Live Repair Progress</h3>
+    
+    {% set steps = ['Received', 'Diagnosing', 'Waiting for Approval', 'Repairing', 'Ready for Collection', 'Completed'] %}
+    {% set current_idx = 0 %}
+    {% for s in steps %}
+        {% if s == repair.status %}
+            {% set current_idx = loop.index0 %}
+        {% endif %}
+    {% endfor %}
+
+    <div class="timeline">
+        {% for s in steps %}
+        {% set step_idx = loop.index0 %}
+        <div class="timeline-step {% if step_idx == current_idx %}active{% elif step_idx < current_idx %}completed{% endif %}">
+            <div class="timeline-dot">
+                {% if step_idx < current_idx %}<i class="fa-solid fa-check"></i>{% else %}{{ loop.index }}{% endif %}
+            </div>
+            <div class="timeline-label">{{ s }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px;">
+    <!-- Fault & Device Info Card -->
+    <div class="card">
+        <h3 class="card-title"><i class="fa-solid fa-circle-info"></i> Ticket Information</h3>
+        <p><strong>Category:</strong> {{ repair.category }}</p>
+        <p><strong>Delivery Method:</strong> {{ repair.delivery_type }}</p>
+        <p><strong>Technician Assigned:</strong> {{ repair.technician_name if repair.technician_name else 'Awaiting Assignment' }}</p>
+        <div style="margin-top: 15px; background: #f8fafc; padding: 14px; border-radius: 6px; border: 1px solid var(--border-color);">
+            <strong>Fault Description:</strong>
+            <p style="margin-top: 6px; color: #475569;">{{ repair.fault_description }}</p>
+        </div>
+        {% if repair.diagnosis_notes %}
+        <div style="margin-top: 15px; background: #eff6ff; padding: 14px; border-radius: 6px; border: 1px solid #bfdbfe;">
+            <strong style="color: #1e40af;"><i class="fa-solid fa-user-gear"></i> Technician Diagnosis Notes:</strong>
+            <p style="margin-top: 6px; color: #1e3a8a;">{{ repair.diagnosis_notes }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Quote & Decision Card -->
+    <div class="card">
+        <h3 class="card-title"><i class="fa-solid fa-calculator" style="color: var(--secondary-color);"></i> Repair Cost & Quote</h3>
+        
+        {% if quote %}
+            <div style="background: #fafafa; border: 1px solid var(--border-color); padding: 18px; border-radius: 8px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <span style="color: var(--text-muted);">Estimated Price Range:</span>
+                    <strong>₹{{ quote.min_estimated_cost|int }} – ₹{{ quote.max_estimated_cost|int }}</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 1.1rem; font-weight: 700; color: var(--primary-color);">
+                    <span>Final Quoted Amount:</span>
+                    <span>₹{{ quote.final_quoted_amount|int }}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                    <span style="color: var(--text-muted);">Estimated Ready Time:</span>
+                    <span><i class="fa-solid fa-clock"></i> {{ quote.estimated_completion_time }}</span>
+                </div>
+                {% if quote.technician_notes %}
+                <p style="font-size: 0.88rem; color: #64748b; margin-top: 10px; border-top: 1px solid #e2e8f0; padding-top: 8px;">
+                    <strong>Work Details:</strong> {{ quote.technician_notes }}
+                </p>
+                {% endif %}
+            </div>
+
+            {% if quote.status == 'Pending Customer Approval' or repair.status == 'Waiting for Approval' %}
+            <div style="margin-top: 20px; text-align: center;">
+                <p style="font-size: 0.95rem; font-weight: 600; margin-bottom: 12px;">Do you approve this estimate for repair?</p>
+                <form action="{{ url_for('customer.quote_action', repair_id=repair.id) }}" method="POST" style="display: flex; gap: 12px; justify-content: center;">
+                    <button type="submit" name="decision" value="Approved" class="btn btn-success">
+                        <i class="fa-solid fa-circle-check"></i> Approve Quote
+                    </button>
+                    <button type="submit" name="decision" value="Declined" class="btn btn-danger">
+                        <i class="fa-solid fa-circle-xmark"></i> Decline Quote
+                    </button>
+                </form>
+            </div>
+            {% else %}
+            <div style="margin-top: 15px;">
+                <span class="badge badge-success" style="padding: 6px 12px;">Quote Status: {{ quote.status }}</span>
+            </div>
+            {% endif %}
+
+            <!-- Payment Button -->
+            {% if (repair.status == 'Ready for Collection' or repair.status == 'Completed' or quote.status == 'Approved') and not payment %}
+            <div style="margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 15px;">
+                <h4><i class="fa-solid fa-credit-card"></i> Process Payment</h4>
+                <form action="{{ url_for('customer.process_payment', repair_id=repair.id) }}" method="POST" style="margin-top: 10px;">
+                    <div class="form-group">
+                        <label class="form-label">Payment Method</label>
+                        <select name="payment_method" class="form-control">
+                            <option value="UPI / Online Transfer">UPI / Online Transfer (Instant)</option>
+                            <option value="Credit / Debit Card">Credit / Debit Card</option>
+                            <option value="Cash at Shop Pickup">Cash at Shop Pickup</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fa-solid fa-lock"></i> Pay ₹{{ quote.final_quoted_amount|int }} Now
+                    </button>
+                </form>
+            </div>
+            {% elif payment %}
+            <div style="margin-top: 20px; background: #d1fae5; color: #065f46; padding: 12px; border-radius: 6px;">
+                <i class="fa-solid fa-receipt"></i> <strong>Payment Completed</strong><br>
+                Amount Paid: ₹{{ payment.amount|int }} (Ref: {{ payment.transaction_reference }})
+            </div>
+            {% endif %}
+        {% else %}
+            <p style="color: var(--text-muted); font-style: italic;">The repair shop is inspecting your item and will post an estimate shortly.</p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Customer Review Card if Repair Completed -->
+{% if repair.status == 'Completed' %}
+<div class="card">
+    <h3 class="card-title"><i class="fa-solid fa-star" style="color: #f59e0b;"></i> Customer Feedback</h3>
+    {% if existing_review %}
+    <div style="background: #f8fafc; padding: 15px; border-radius: 6px;">
+        <p><strong>Your Rating:</strong> <span style="color: #f59e0b;">{% for _ in range(existing_review.rating) %}★{% endfor %}</span></p>
+        <p style="margin-top: 6px; font-style: italic;">"{{ existing_review.comment }}"</p>
+    </div>
+    {% else %}
+    <form action="{{ url_for('customer.submit_review', repair_id=repair.id) }}" method="POST">
+        <div class="form-group">
+            <label class="form-label">Rating (1 to 5 Stars)</label>
+            <select name="rating" class="form-control" style="width: 150px;">
+                <option value="5">5 ★★★★★ Excellent</option>
+                <option value="4">4 ★★★★ Good</option>
+                <option value="3">3 ★★★ Average</option>
+                <option value="2">2 ★★ Poor</option>
+                <option value="1">1 ★ Terrible</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Your Review Comments</label>
+            <textarea name="comment" class="form-control" rows="3" placeholder="Share your experience with the repair quality and service speed..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Submit Feedback</button>
+    </form>
+    {% endif %}
+</div>
+{% endif %}
+
+{% endblock %}
