@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Register Account — FixLoop{% endblock %}
+
+{% block content %}
+<div style="max-width: 500px; margin: 30px auto;">
+    <div class="card">
+        <h2 class="card-title" style="text-align: center; justify-content: center;">
+            <i class="fa-solid fa-user-plus" style="color: var(--primary-color);"></i> Join FixLoop Marketplace
+        </h2>
+        
+        <form action="{{ url_for('auth.register') }}" method="POST">
+            <div class="form-group">
+                <label class="form-label">Account Role</label>
+                <select name="role" class="form-control" required>
+                    <option value="customer">Customer (I want to repair an item)</option>
+                    <option value="shop">Repair Shop Owner (I operate a repair business)</option>
+                    <option value="technician">Technician (I diagnose & repair items)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Full Name / Business Name</label>
+                <input type="text" name="name" class="form-control" placeholder="Aarav Sharma or Apex Electronics" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" name="email" class="form-control" placeholder="aarav@example.com" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" name="phone" class="form-control" placeholder="+91 98765 43210">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" placeholder="Minimum 6 characters" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-block" style="margin-top: 10px;">
+                <i class="fa-solid fa-check"></i> Register Account
+            </button>
+        </form>
+
+        <div style="margin-top: 20px; text-align: center;">
+            <p style="font-size: 0.9rem; color: var(--text-muted);">Already registered?</p>
+            <a href="{{ url_for('auth.login') }}" style="color: var(--primary-color); font-weight: 600; text-decoration: none;">
+                Sign in to your account
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
