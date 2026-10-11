@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}New Repair Request — FixLoop{% endblock %}
+
+{% block content %}
+<div style="max-width: 700px; margin: 0 auto;">
+    <div style="margin-bottom: 20px;">
+        <a href="{{ url_for('customer.dashboard') }}" style="color: var(--text-muted); text-decoration: none;">
+            <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+
+    <div class="card">
+        <h2 class="card-title">
+            <i class="fa-solid fa-wrench" style="color: var(--primary-color);"></i> Submit a New Repair Request
+        </h2>
+
+        <form action="{{ url_for('customer.new_repair') }}" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="form-label">Item / Gadget Name *</label>
+                <input type="text" name="item_name" class="form-control" placeholder="e.g., Laptop charging problem (Dell XPS 13)" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Select Repair Shop *</label>
+                <select name="shop_id" class="form-control" required>
+                    {% for shop in shops %}
+                    <option value="{{ shop.id }}">{{ shop.name }} ({{ shop.address }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Service Category</label>
+                <select name="category" class="form-control">
+                    <option value="Laptops & Computers">Laptops & Computers</option>
+                    <option value="Smartphones & Tablets">Smartphones & Tablets</option>
+                    <option value="E-Bikes & Scooters">E-Bikes & Scooters</option>
+                    <option value="Home Audio & Appliances">Home Audio & Appliances</option>
+                    <option value="Gaming Consoles">Gaming Consoles</option>
+                    <option value="Smart Wearables">Smart Wearables</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Describe Fault / Problem in Detail *</label>
+                <textarea name="fault_description" class="form-control" rows="4" placeholder="Explain what broke or stopped working (e.g. Laptop will not charge unless adapter cable is held at an angle)..." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Delivery Preference</label>
+                <select name="delivery_type" class="form-control">
+                    <option value="Drop-off at Shop">Drop-off at Shop</option>
+                    <option value="Pickup Required">Courier / Doorstep Pickup Required</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Attach Item Photo (Optional)</label>
+                <input type="file" name="photo" class="form-control" accept="image/*">
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block" style="margin-top: 15px; padding: 12px;">
+                <i class="fa-solid fa-paper-plane"></i> Submit Repair Request
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
