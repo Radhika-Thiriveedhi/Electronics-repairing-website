@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+
+{% block title %}Shop Dashboard — FixLoop{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
+    <div>
+        <h1 style="font-size: 1.8rem; font-weight: 700;">Repair Shop Owner Dashboard</h1>
+        <p style="color: var(--text-muted);">Manage incoming service requests, send quotes, assign technicians, and track revenue.</p>
+    </div>
+    <div style="display: flex; gap: 10px;">
+        <a href="{{ url_for('shop.parts_inventory') }}" class="btn btn-outline"><i class="fa-solid fa-boxes-stacked"></i> Spare Parts Inventory</a>
+        <a href="{{ url_for('shop.requests_list') }}" class="btn btn-primary"><i class="fa-solid fa-list-check"></i> All Requests</a>
+    </div>
+</div>
+
+<!-- Stat Cards Grid -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon stat-icon-amber"><i class="fa-solid fa-inbox"></i></div>
+        <div>
+            <div class="stat-value">{{ incoming|length }}</div>
+            <div class="stat-label">Incoming Requests</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon stat-icon-blue"><i class="fa-solid fa-calculator"></i></div>
+        <div>
+            <div class="stat-value">{{ awaiting_quote|length + awaiting_approval|length }}</div>
+            <div class="stat-label">Quotes Pending / Approval</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon stat-icon-purple"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+        <div>
+            <div class="stat-value">{{ active|length }}</div>
+            <div class="stat-label">Active Repairs</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon stat-icon-green"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+        <div>
+            <div class="stat-value">₹{{ stats.total_revenue|int }}</div>
+            <div class="stat-label">Completed Sales Revenue</div>
+        </div>
+    </div>
+</div>
+
+<!-- Incoming Requests Table -->
+<div class="card">
+    <h2 class="card-title" style="color: var(--primary-color);">
+        <i class="fa-solid fa-bell"></i> 1. Incoming Service Requests
+    </h2>
+    {% if incoming %}
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>Customer Name</th>
+                    <th>Item / Gadget</th>
+                    <th>Fault Description</th>
+                    <th>Delivery</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in incoming %}
+                <tr>
+                    <td><strong>{{ r.id }}</strong></td>
+                    <td>{{ r.customer_name }}</td>
+                    <td><strong>{{ r.item_name }}</strong></td>
+                    <td>{{ r.fault_description }}</td>
+                    <td><span class="badge badge-received">{{ r.delivery_type }}</span></td>
+                    <td>
+                        <form action="{{ url_for('shop.repair_action', repair_id=r.id) }}" method="POST" style="display: flex; gap: 6px;">
+                            <button type="submit" name="action" value="accept" class="btn btn-success btn-sm"><i class="fa-solid fa-check"></i> Accept Job</button>
+                            <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm"><i class="fa-solid fa-xmark"></i> Reject</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p style="color: var(--text-muted); font-style: italic; padding: 15px 0;">No pending incoming requests at the moment.</p>
+    {% endif %}
+</div>
+
+<!-- Jobs Awaiting Quote / Customer Approval -->
+<div class="card">
+    <h2 class="card-title" style="color: #d97706;">
+        <i class="fa-solid fa-quote-left"></i> 2. Quotes & Customer Approvals
+    </h2>
+    {% if awaiting_quote or awaiting_approval %}
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>Item Name</th>
+                    <th>Status</th>
+                    <th>Technician</th>
+                    <th>Action / Decision</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in awaiting_quote %}
+                <tr>
+                    <td><strong>{{ r.id }}</strong></td>
+                    <td>{{ r.item_name }}</td>
+                    <td><span class="badge badge-diagnosing">Diagnosing</span></td>
+                    <td>
+                        <form action="{{ url_for('shop.assign_tech', repair_id=r.id) }}" method="POST" style="display: flex; gap: 4px;">
+                            <select name="technician_id" style="font-size: 0.8rem; padding: 4px;">
+                                <option value="">Select Technician</option>
+                                {% for tech in technicians %}
+                                <option value="{{ tech.id }}" {% if r.technician_id == tech.id %}selected{% endif %}>{{ tech.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit" class="btn btn-outline btn-sm">Assign</button>
+                        </form>
+                    </td>
+                    <td>
+                        <a href="{{ url_for('shop.quote_form', repair_id=r.id) }}" class="btn btn-warning btn-sm">
+                            <i class="fa-solid fa-calculator"></i> Create & Send Quote
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+
+                {% for r in awaiting_approval %}
+                <tr>
+                    <td><strong>{{ r.id }}</strong></td>
+                    <td>{{ r.item_name }}</td>
+                    <td><span class="badge badge-waiting-for-approval">Waiting for Approval</span></td>
+                    <td>{{ r.technician_name if r.technician_name else 'Unassigned' }}</td>
+                    <td>
+                        <span style="font-size: 0.88rem; color: #475569;"><i class="fa-solid fa-hourglass-half"></i> Quote Sent to Customer</span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p style="color: var(--text-muted); font-style: italic; padding: 15px 0;">No repairs currently awaiting quotes or approvals.</p>
+    {% endif %}
+</div>
+
+<!-- Active Repairs -->
+<div class="card">
+    <h2 class="card-title" style="color: var(--secondary-color);">
+        <i class="fa-solid fa-screwdriver-wrench"></i> 3. Active Repairs & Collection
+    </h2>
+    {% if active %}
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>Item Name</th>
+                    <th>Customer</th>
+                    <th>Technician</th>
+                    <th>Current Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in active %}
+                <tr>
+                    <td><strong>{{ r.id }}</strong></td>
+                    <td>{{ r.item_name }}</td>
+                    <td>{{ r.customer_name }}</td>
+                    <td>{{ r.technician_name if r.technician_name else 'Unassigned' }}</td>
+                    <td><span class="badge badge-{{ r.status|lower|replace(' ', '-') }}">{{ r.status }}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p style="color: var(--text-muted); font-style: italic; padding: 15px 0;">No active repairs currently in progress.</p>
+    {% endif %}
+</div>
+{% endblock %}
