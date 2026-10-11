@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Customer Dashboard — FixLoop{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
+    <div>
+        <h1 style="font-size: 1.8rem; font-weight: 700;">Customer Dashboard</h1>
+        <p style="color: var(--text-muted);">Track your active repair jobs, quotes, and service history.</p>
+    </div>
+    <a href="{{ url_for('customer.new_repair') }}" class="btn btn-primary">
+        <i class="fa-solid fa-plus-circle"></i> New Repair Request
+    </a>
+</div>
+
+<!-- Active Notifications Banner -->
+{% if notifications %}
+<div class="card" style="border-left: 4px solid var(--primary-color); background: #f0f9ff;">
+    <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 10px; color: #0369a1;">
+        <i class="fa-solid fa-bell"></i> Recent Notifications
+    </h3>
+    <ul style="list-style: none;">
+        {% for n in notifications %}
+        <li style="padding: 6px 0; border-bottom: 1px solid #e0f2fe; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <strong>{{ n.title }}:</strong> {{ n.message }}
+            </div>
+            {% if not n.read %}
+            <a href="{{ url_for('customer.read_notif', notif_id=n.id) }}" class="btn btn-outline btn-sm" style="font-size: 0.75rem; padding: 2px 8px;">Mark Read</a>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+<!-- Repair Requests Table -->
+<div class="card">
+    <h2 class="card-title"><i class="fa-solid fa-screwdriver-wrench" style="color: var(--primary-color);"></i> Your Repair Requests</h2>
+    
+    {% if repairs %}
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>Item Name</th>
+                    <th>Repair Shop</th>
+                    <th>Category</th>
+                    <th>Quoted Amount</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in repairs %}
+                {% set q = quotes_map.get(r.id) %}
+                <tr>
+                    <td><strong>{{ r.id }}</strong></td>
+                    <td>{{ r.item_name }}</td>
+                    <td><i class="fa-solid fa-shop" style="color: #64748b;"></i> {{ r.shop_name }}</td>
+                    <td><span class="badge badge-received">{{ r.category }}</span></td>
+                    <td>
+                        {% if q %}
+                            ₹{{ q.final_quoted_amount|int }}
+                        {% else %}
+                            <span style="color: #94a3b8; font-style: italic;">Pending Quote</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <span class="badge badge-{{ r.status|lower|replace(' ', '-') }}">
+                            {{ r.status }}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="{{ url_for('customer.repair_detail', repair_id=r.id) }}" class="btn btn-outline btn-sm">
+                            <i class="fa-solid fa-eye"></i> View Details
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 40px 20px;">
+        <i class="fa-solid fa-box-open" style="font-size: 3rem; color: #cbd5e1; margin-bottom: 12px;"></i>
+        <p style="font-size: 1.1rem; color: #64748b;">You don't have any repair requests yet.</p>
+        <a href="{{ url_for('customer.new_repair') }}" class="btn btn-primary" style="margin-top: 15px;">
+            <i class="fa-solid fa-plus"></i> Submit Your First Repair Request
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
