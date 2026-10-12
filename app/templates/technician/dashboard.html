@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Technician Workspace — FixLoop{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 25px;">
+    <h1 style="font-size: 1.8rem; font-weight: 700;">Technician Workbench</h1>
+    <p style="color: var(--text-muted);">View assigned repairs, diagnose faults, update progress, and log parts used.</p>
+</div>
+
+<!-- Assigned Jobs -->
+<div class="card">
+    <h2 class="card-title" style="color: var(--primary-color);">
+        <i class="fa-solid fa-screwdriver-wrench"></i> Jobs Assigned to You
+    </h2>
+    {% if assigned_jobs %}
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>Item Name</th>
+                    <th>Customer</th>
+                    <th>Category</th>
+                    <th>Current Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in assigned_jobs %}
+                <tr>
+                    <td><strong>{{ r.id }}</strong></td>
+                    <td>{{ r.item_name }}</td>
+                    <td>{{ r.customer_name }}</td>
+                    <td><span class="badge badge-received">{{ r.category }}</span></td>
+                    <td><span class="badge badge-{{ r.status|lower|replace(' ', '-') }}">{{ r.status }}</span></td>
+                    <td>
+                        <a href="{{ url_for('technician.job_detail', repair_id=r.id) }}" class="btn btn-primary btn-sm">
+                            <i class="fa-solid fa-sliders"></i> Workbench / Update Status
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p style="color: var(--text-muted); font-style: italic; padding: 15px 0;">No active jobs currently assigned to your workbench.</p>
+    {% endif %}
+</div>
+
+<!-- Shop Unassigned Pool -->
+{% if unassigned_jobs %}
+<div class="card">
+    <h2 class="card-title" style="color: #d97706;">
+        <i class="fa-solid fa-layer-group"></i> Shop Repair Pool (Unassigned Jobs)
+    </h2>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>Item Name</th>
+                    <th>Customer</th>
+                    <th>Fault Summary</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in unassigned_jobs %}
+                <tr>
+                    <td><strong>{{ r.id }}</strong></td>
+                    <td>{{ r.item_name }}</td>
+                    <td>{{ r.customer_name }}</td>
+                    <td>{{ r.fault_description }}</td>
+                    <td>
+                        <a href="{{ url_for('technician.job_detail', repair_id=r.id) }}" class="btn btn-outline btn-sm">
+                            <i class="fa-solid fa-eye"></i> View Job
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
