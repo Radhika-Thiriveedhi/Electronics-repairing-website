@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Access Denied (403) — FixLoop{% endblock %}
+
+{% block content %}
+<div style="text-align: center; padding: 60px 20px;">
+    <i class="fa-solid fa-user-lock" style="font-size: 4rem; color: #ef4444; margin-bottom: 20px;"></i>
+    <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 10px;">403 — Access Restricted</h1>
+    <p style="font-size: 1.1rem; color: var(--text-muted); max-width: 500px; margin: 0 auto 25px;">
+        You do not have permission to access this dashboard or action. Please sign in with an authorized role account.
+    </p>
+    <a href="{{ url_for('public.home') }}" class="btn btn-primary"><i class="fa-solid fa-house"></i> Return to Homepage</a>
+</div>
+{% endblock %}
