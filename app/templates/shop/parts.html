@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Parts Inventory — FixLoop{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 20px;">
+    <a href="{{ url_for('shop.dashboard') }}" style="color: var(--text-muted); text-decoration: none;">
+        <i class="fa-solid fa-arrow-left"></i> Back to Dashboard
+    </a>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 2fr; gap: 24px;">
+    <!-- Add Part Form -->
+    <div class="card">
+        <h2 class="card-title"><i class="fa-solid fa-plus-circle" style="color: var(--primary-color);"></i> Add Spare Part</h2>
+        <form action="{{ url_for('shop.parts_inventory') }}" method="POST">
+            <div class="form-group">
+                <label class="form-label">Part Name *</label>
+                <input type="text" name="name" class="form-control" placeholder="e.g. Type-C USB Daughterboard" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">SKU Code *</label>
+                <input type="text" name="sku" class="form-control" placeholder="PRT-USB-DELL" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Stock Quantity</label>
+                <input type="number" name="qty" class="form-control" value="5" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Cost Price (₹)</label>
+                <input type="number" name="cost" class="form-control" value="200" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Selling / Retail Price (₹)</label>
+                <input type="number" name="price" class="form-control" value="450" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block"><i class="fa-solid fa-plus"></i> Save Part</button>
+        </form>
+    </div>
+
+    <!-- Inventory Table -->
+    <div class="card">
+        <h2 class="card-title"><i class="fa-solid fa-boxes-stacked" style="color: var(--secondary-color);"></i> Shop Inventory Stock</h2>
+        {% if parts %}
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>SKU</th>
+                        <th>Part Name</th>
+                        <th>Stock Qty</th>
+                        <th>Cost Price</th>
+                        <th>Selling Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in parts %}
+                    <tr>
+                        <td><code>{{ p.sku }}</code></td>
+                        <td><strong>{{ p.name }}</strong></td>
+                        <td>
+                            <span class="badge {% if p.stock_quantity < 3 %}badge-declined{% else %}badge-ready-for-collection{% endif %}">
+                                {{ p.stock_quantity }} units
+                            </span>
+                        </td>
+                        <td>₹{{ p.cost_price|int }}</td>
+                        <td>₹{{ p.selling_price|int }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p style="color: var(--text-muted); font-style: italic;">No spare parts logged in inventory.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
