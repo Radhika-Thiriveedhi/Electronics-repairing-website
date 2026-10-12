@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}Platform Owner Dashboard — FixLoop Analytics{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
+    <div>
+        <h1 style="font-size: 1.8rem; font-weight: 700;">Platform Owner Analytics</h1>
+        <p style="color: var(--text-muted);">Monitor platform-wide service volume, revenue, shop network, and customer feedback.</p>
+    </div>
+    <a href="{{ url_for('owner.shops_management') }}" class="btn btn-primary">
+        <i class="fa-solid fa-store"></i> Manage Repair Shops Network
+    </a>
+</div>
+
+<!-- Key Platform Figures -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon stat-icon-blue"><i class="fa-solid fa-layer-group"></i></div>
+        <div>
+            <div class="stat-value">{{ analytics.total_jobs }}</div>
+            <div class="stat-label">Total Repair Requests</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon stat-icon-green"><i class="fa-solid fa-circle-check"></i></div>
+        <div>
+            <div class="stat-value">{{ analytics.completed_jobs }}</div>
+            <div class="stat-label">Completed Repairs</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon stat-icon-amber"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+        <div>
+            <div class="stat-value">₹{{ analytics.total_sales|int }}</div>
+            <div class="stat-label">Total Platform GMV Revenue</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon stat-icon-purple"><i class="fa-solid fa-store"></i></div>
+        <div>
+            <div class="stat-value">{{ analytics.active_shops_count }}</div>
+            <div class="stat-label">Registered Repair Shops</div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js Visualization Grid -->
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 24px; margin-bottom: 25px;">
+    <!-- Revenue & Monthly Volume Chart -->
+    <div class="card">
+        <h3 class="card-title"><i class="fa-solid fa-chart-column" style="color: var(--primary-color);"></i> Monthly Revenue & Repair Volume</h3>
+        <div style="position: relative; height: 280px;">
+            <canvas id="revenueChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Category Popularity Breakdown Chart -->
+    <div class="card">
+        <h3 class="card-title"><i class="fa-solid fa-chart-pie" style="color: var(--secondary-color);"></i> Service Categories Breakdown</h3>
+        <div style="position: relative; height: 280px; display: flex; justify-content: center;">
+            <canvas id="categoryChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Registered Shops Directory Preview -->
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h2 class="card-title" style="margin-bottom: 0;"><i class="fa-solid fa-store"></i> Registered Shops Overview</h2>
+        <a href="{{ url_for('owner.shops_management') }}" class="btn btn-outline btn-sm">View All Shops</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Shop Name</th>
+                    <th>Address Location</th>
+                    <th>Contact</th>
+                    <th>Supported Categories</th>
+                    <th>Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for shop in shops %}
+                <tr>
+                    <td><strong>{{ shop.name }}</strong></td>
+                    <td>{{ shop.address }}</td>
+                    <td>{{ shop.contact }}</td>
+                    <td>
+                        {% for cat in shop.categories %}
+                        <span class="badge badge-received" style="font-size: 0.75rem;">{{ cat }}</span>
+                        {% endfor %}
+                    </td>
+                    <td><span class="badge" style="background: #fef3c7; color: #d97706;"><i class="fa-solid fa-star"></i> {{ shop.rating }}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Recent Activity Log -->
+<div class="card">
+    <h2 class="card-title"><i class="fa-solid fa-clock-rotate-left"></i> Recent Platform Activity</h2>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>Item</th>
+                    <th>Customer</th>
+                    <th>Shop</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in recent_repairs %}
+                <tr>
+                    <td><strong>{{ r.id }}</strong></td>
+                    <td>{{ r.item_name }}</td>
+                    <td>{{ r.customer_name }}</td>
+                    <td>{{ r.shop_name }}</td>
+                    <td><span class="badge badge-{{ r.status|lower|replace(' ', '-') }}">{{ r.status }}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/owner_charts.js') }}"></script>
+{% endblock %}
