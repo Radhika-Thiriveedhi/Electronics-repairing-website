@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Repair Shops — Platform Owner{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 20px;">
+    <a href="{{ url_for('owner.dashboard') }}" style="color: var(--text-muted); text-decoration: none;">
+        <i class="fa-solid fa-arrow-left"></i> Back to Owner Analytics
+    </a>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 2fr; gap: 24px;">
+    <!-- Add New Shop Form -->
+    <div class="card">
+        <h2 class="card-title"><i class="fa-solid fa-plus-circle" style="color: var(--primary-color);"></i> Register New Shop</h2>
+        <form action="{{ url_for('owner.shops_management') }}" method="POST">
+            <div class="form-group">
+                <label class="form-label">Repair Shop Name *</label>
+                <input type="text" name="name" class="form-control" placeholder="e.g. SpeedFix Mobile Hub" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Full Address *</label>
+                <input type="text" name="address" class="form-control" placeholder="12 Tech Park, Bengaluru" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Contact Number</label>
+                <input type="text" name="contact" class="form-control" placeholder="+91 98765 43210">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Categories (Comma Separated)</label>
+                <input type="text" name="categories" class="form-control" placeholder="Laptops & Computers, Smartphones & Tablets">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Description / Bio</label>
+                <textarea name="description" class="form-control" rows="3" placeholder="Specialization details..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block"><i class="fa-solid fa-check"></i> Register Repair Shop</button>
+        </form>
+    </div>
+
+    <!-- Shop List Table -->
+    <div class="card">
+        <h2 class="card-title"><i class="fa-solid fa-store" style="color: var(--secondary-color);"></i> Registered Repair Shops Directory</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Shop ID</th>
+                        <th>Shop Name</th>
+                        <th>Location</th>
+                        <th>Contact</th>
+                        <th>Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for shop in shops %}
+                    <tr>
+                        <td><code>{{ shop.id }}</code></td>
+                        <td><strong>{{ shop.name }}</strong></td>
+                        <td>{{ shop.address }}</td>
+                        <td>{{ shop.contact }}</td>
+                        <td><span class="badge" style="background: #fef3c7; color: #d97706;"><i class="fa-solid fa-star"></i> {{ shop.rating }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
