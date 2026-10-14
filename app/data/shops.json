@@ -1,0 +1,43 @@
+[
+  {
+    "id": "shp_apex_101",
+    "name": "Apex Micro-Electronics Lab",
+    "owner_id": "usr_shop_1",
+    "categories": [
+      "Laptops & Computers",
+      "Smartphones & Tablets",
+      "Home Audio & Appliances"
+    ],
+    "rating": 4.8,
+    "address": "104 MG Road, Sector 14, Bengaluru",
+    "contact": "+91 99887 76655",
+    "description": "Certified micro-soldering, motherboard level repair, and battery conditioning hub."
+  },
+  {
+    "id": "shp_protech_102",
+    "name": "ProTech Gear & Gadget Clinic",
+    "owner_id": "usr_shop_2",
+    "categories": [
+      "Smartphones & Tablets",
+      "Gaming Consoles",
+      "Smart Wearables"
+    ],
+    "rating": 4.7,
+    "address": "22 Tech Park Ave, Whitefield, Bengaluru",
+    "contact": "+91 97766 55443",
+    "description": "Fast turnaround screen replacements, port fixes, and thermal repasting."
+  },
+  {
+    "id": "shp_greenwheel_103",
+    "name": "GreenWheel E-Mobility & Bike Hub",
+    "owner_id": "usr_shop_3",
+    "categories": [
+      "E-Bikes & Scooters",
+      "Bicycles & Mobility"
+    ],
+    "rating": 4.9,
+    "address": "58 Eco Hub Plaza, Indiranagar, Bengaluru",
+    "contact": "+91 94455 66778",
+    "description": "Lithium battery diagnostics, motor rewinding, hydraulic brake tuning."
+  }
+]

@@ -1,0 +1,226 @@
+[
+  {
+    "id": "NOT-018460-G3R",
+    "user_id": "usr_tech_1",
+    "title": "Job Assigned",
+    "message": "You have been assigned to repair job 'iPad Air' (REP-018429-6WU).",
+    "read": false,
+    "created_at": "2026-10-12T04:56:58.460219Z"
+  },
+  {
+    "id": "NOT-018442-7OJ",
+    "user_id": "usr_shop_1",
+    "title": "New Repair Request",
+    "message": "New request 'iPad Air' submitted by Aarav Sharma.",
+    "read": false,
+    "created_at": "2026-10-12T04:56:58.442164Z"
+  },
+  {
+    "id": "NOT-018297-L9B",
+    "user_id": "usr_customer_1",
+    "title": "Repair Status Updated",
+    "message": "Your repair for 'MacBook Pro 16' is now: Diagnosing.",
+    "read": false,
+    "created_at": "2026-10-12T04:56:58.297749Z"
+  },
+  {
+    "id": "NOT-018276-YMO",
+    "user_id": "usr_shop_1",
+    "title": "New Repair Request",
+    "message": "New request 'MacBook Pro 16' submitted by Aarav Sharma.",
+    "read": false,
+    "created_at": "2026-10-12T04:56:58.276683Z"
+  },
+  {
+    "id": "NOT-018135-7U4",
+    "user_id": "usr_customer_1",
+    "title": "Repair Status Updated",
+    "message": "Your repair for 'E-Bike Lithium Battery' is now: Completed.",
+    "read": false,
+    "created_at": "2026-10-12T04:56:58.135332Z"
+  },
+  {
+    "id": "NOT-018115-X4Q",
+    "user_id": "usr_shop_1",
+    "title": "Quote Approved by Customer",
+    "message": "Customer Aarav Sharma approved quote QTE-018064-YBV for E-Bike Lithium Battery.",
+    "read": false,
+    "created_at": "2026-10-12T04:56:58.115363Z"
+  },
+  {
+    "id": "NOT-018106-2PR",
+    "user_id": "usr_customer_1",
+    "title": "Repair Status Updated",
+    "message": "Your repair for 'E-Bike Lithium Battery' is now: Repairing.",
+    "read": false,
+    "created_at": "2026-10-12T04:56:58.106981Z"
+  },
+  {
+    "id": "NOT-018075-OLU",
+    "user_id": "usr_customer_1",
+    "title": "Quote Estimate Received",
+    "message": "Shop estimated ₹2,000–₹3,000 for your E-Bike Lithium Battery. Please review and approve.",
+    "read": false,
+    "created_at": "2026-10-12T04:56:58.075912Z"
+  },
+  {
+    "id": "NOT-018049-GOF",
+    "user_id": "usr_shop_1",
+    "title": "New Repair Request",
+    "message": "New request 'E-Bike Lithium Battery' submitted by Aarav Sharma.",
+    "read": false,
+    "created_at": "2026-10-12T04:56:58.049810Z"
+  },
+  {
+    "id": "NOT-982393-1NH",
+    "user_id": "usr_tech_1",
+    "title": "Job Assigned",
+    "message": "You have been assigned to repair job 'iPad Air' (REP-982362-NHS).",
+    "read": false,
+    "created_at": "2026-10-12T04:56:22.393467Z"
+  },
+  {
+    "id": "NOT-982375-Z1N",
+    "user_id": "usr_shop_1",
+    "title": "New Repair Request",
+    "message": "New request 'iPad Air' submitted by Aarav Sharma.",
+    "read": false,
+    "created_at": "2026-10-12T04:56:22.375759Z"
+  },
+  {
+    "id": "NOT-982238-AEK",
+    "user_id": "usr_customer_1",
+    "title": "Repair Status Updated",
+    "message": "Your repair for 'MacBook Pro 16' is now: Diagnosing.",
+    "read": false,
+    "created_at": "2026-10-12T04:56:22.238716Z"
+  },
+  {
+    "id": "NOT-982222-6WK",
+    "user_id": "usr_shop_1",
+    "title": "New Repair Request",
+    "message": "New request 'MacBook Pro 16' submitted by Aarav Sharma.",
+    "read": false,
+    "created_at": "2026-10-12T04:56:22.222556Z"
+  },
+  {
+    "id": "NOT-982075-JSK",
+    "user_id": "usr_customer_1",
+    "title": "Repair Status Updated",
+    "message": "Your repair for 'E-Bike Lithium Battery' is now: Completed.",
+    "read": false,
+    "created_at": "2026-10-12T04:56:22.075331Z"
+  },
+  {
+    "id": "NOT-982056-HZV",
+    "user_id": "usr_shop_1",
+    "title": "Quote Approved by Customer",
+    "message": "Customer Aarav Sharma approved quote QTE-982000-1O8 for E-Bike Lithium Battery.",
+    "read": false,
+    "created_at": "2026-10-12T04:56:22.056208Z"
+  },
+  {
+    "id": "NOT-982048-1FB",
+    "user_id": "usr_customer_1",
+    "title": "Repair Status Updated",
+    "message": "Your repair for 'E-Bike Lithium Battery' is now: Repairing.",
+    "read": false,
+    "created_at": "2026-10-12T04:56:22.048678Z"
+  },
+  {
+    "id": "NOT-982016-PBJ",
+    "user_id": "usr_customer_1",
+    "title": "Quote Estimate Received",
+    "message": "Shop estimated ₹2,000–₹3,000 for your E-Bike Lithium Battery. Please review and approve.",
+    "read": false,
+    "created_at": "2026-10-12T04:56:22.016439Z"
+  },
+  {
+    "id": "NOT-981979-KTJ",
+    "user_id": "usr_shop_1",
+    "title": "New Repair Request",
+    "message": "New request 'E-Bike Lithium Battery' submitted by Aarav Sharma.",
+    "read": false,
+    "created_at": "2026-10-12T04:56:21.979981Z"
+  },
+  {
+    "id": "NOT-507573-L4Z",
+    "user_id": "usr_tech_1",
+    "title": "Job Assigned",
+    "message": "You have been assigned to repair job 'iPad Air' (REP-507543-8VS).",
+    "read": false,
+    "created_at": "2026-10-12T04:48:27.573909Z"
+  },
+  {
+    "id": "NOT-507554-ZOC",
+    "user_id": "usr_shop_1",
+    "title": "New Repair Request",
+    "message": "New request 'iPad Air' submitted by Aarav Sharma.",
+    "read": false,
+    "created_at": "2026-10-12T04:48:27.554397Z"
+  },
+  {
+    "id": "NOT-507396-FDO",
+    "user_id": "usr_customer_1",
+    "title": "Repair Status Updated",
+    "message": "Your repair for 'MacBook Pro 16' is now: Diagnosing.",
+    "read": false,
+    "created_at": "2026-10-12T04:48:27.396288Z"
+  },
+  {
+    "id": "NOT-507375-PGK",
+    "user_id": "usr_shop_1",
+    "title": "New Repair Request",
+    "message": "New request 'MacBook Pro 16' submitted by Aarav Sharma.",
+    "read": false,
+    "created_at": "2026-10-12T04:48:27.375959Z"
+  },
+  {
+    "id": "NOT-507223-VOF",
+    "user_id": "usr_customer_1",
+    "title": "Repair Status Updated",
+    "message": "Your repair for 'E-Bike Lithium Battery' is now: Completed.",
+    "read": false,
+    "created_at": "2026-10-12T04:48:27.223497Z"
+  },
+  {
+    "id": "NOT-507205-6PH",
+    "user_id": "usr_shop_1",
+    "title": "Quote Approved by Customer",
+    "message": "Customer Aarav Sharma approved quote QTE-507163-D22 for E-Bike Lithium Battery.",
+    "read": false,
+    "created_at": "2026-10-12T04:48:27.205134Z"
+  },
+  {
+    "id": "NOT-507197-T9A",
+    "user_id": "usr_customer_1",
+    "title": "Repair Status Updated",
+    "message": "Your repair for 'E-Bike Lithium Battery' is now: Repairing.",
+    "read": false,
+    "created_at": "2026-10-12T04:48:27.197541Z"
+  },
+  {
+    "id": "NOT-507174-1NC",
+    "user_id": "usr_customer_1",
+    "title": "Quote Estimate Received",
+    "message": "Shop estimated ₹2,000–₹3,000 for your E-Bike Lithium Battery. Please review and approve.",
+    "read": false,
+    "created_at": "2026-10-12T04:48:27.174602Z"
+  },
+  {
+    "id": "NOT-507148-G2Z",
+    "user_id": "usr_shop_1",
+    "title": "New Repair Request",
+    "message": "New request 'E-Bike Lithium Battery' submitted by Aarav Sharma.",
+    "read": false,
+    "created_at": "2026-10-12T04:48:27.148454Z"
+  },
+  {
+    "id": "NOT-301",
+    "user_id": "usr_customer_1",
+    "title": "Quote Received",
+    "message": "Apex Micro-Electronics Lab sent a repair estimate of ₹800–₹1,200 for your Dell XPS 13 (2022).",
+    "read": false,
+    "created_at": "2026-10-02T10:15:00Z"
+  }
+]

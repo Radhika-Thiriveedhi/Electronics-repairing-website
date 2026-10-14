@@ -1,0 +1,20 @@
+[
+  {
+    "id": "PRT-401",
+    "shop_id": "shp_apex_101",
+    "name": "USB-C Charging Port Daughterboard (Dell XPS)",
+    "sku": "PRT-DELL-USBC",
+    "stock_quantity": 4,
+    "cost_price": 350,
+    "selling_price": 600
+  },
+  {
+    "id": "PRT-402",
+    "shop_id": "shp_apex_101",
+    "name": "Thermal Paste Kryonaut (1g)",
+    "sku": "PRT-THM-KRYO",
+    "stock_quantity": 12,
+    "cost_price": 150,
+    "selling_price": 300
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "PAY-901",
+    "repair_id": "REP-2026-003",
+    "quote_id": "QTE-102",
+    "customer_id": "usr_customer_1",
+    "shop_id": "shp_apex_101",
+    "amount": 1500,
+    "payment_method": "UPI / Online Transfer",
+    "status": "Completed",
+    "transaction_reference": "TXN-FL-889012",
+    "created_at": "2026-09-22T16:30:00Z"
+  },
+  {
+    "id": "PAY-507206-1BC",
+    "repair_id": "REP-507140-PVX",
+    "quote_id": "QTE-507163-D22",
+    "customer_id": "usr_customer_1",
+    "shop_id": "shp_apex_101",
+    "amount": 2500.0,
+    "payment_method": "UPI / Online Transfer",
+    "status": "Completed",
+    "transaction_reference": "TXN-507206-H5Q",
+    "created_at": "2026-10-12T04:48:27.206141Z"
+  },
+  {
+    "id": "PAY-982057-SJO",
+    "repair_id": "REP-981970-53K",
+    "quote_id": "QTE-982000-1O8",
+    "customer_id": "usr_customer_1",
+    "shop_id": "shp_apex_101",
+    "amount": 2500.0,
+    "payment_method": "UPI / Online Transfer",
+    "status": "Completed",
+    "transaction_reference": "TXN-982057-G1W",
+    "created_at": "2026-10-12T04:56:22.057713Z"
+  },
+  {
+    "id": "PAY-018117-5TH",
+    "repair_id": "REP-018040-6ZQ",
+    "quote_id": "QTE-018064-YBV",
+    "customer_id": "usr_customer_1",
+    "shop_id": "shp_apex_101",
+    "amount": 2500.0,
+    "payment_method": "UPI / Online Transfer",
+    "status": "Completed",
+    "transaction_reference": "TXN-018117-V1Q",
+    "created_at": "2026-10-12T04:56:58.117867Z"
+  }
+]

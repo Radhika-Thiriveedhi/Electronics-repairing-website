@@ -1,0 +1,79 @@
+[
+  {
+    "id": "usr_customer_1",
+    "email": "customer@fixloop.org",
+    "password_hash": "scrypt:32768:8:1$Oz5UTqkLCr9SbMNF$4b035a82b488f3cca69c5ab7b7959167e00704f70892986650f8a1eb30687c4cb91c44a1dfa004d7a5506e335e585e608cb1da87952db8e0780b2b06ec64c38b",
+    "name": "Aarav Sharma",
+    "role": "customer",
+    "phone": "+91 98765 43210",
+    "created_at": "2026-09-15T10:00:00Z"
+  },
+  {
+    "id": "usr_customer_2",
+    "email": "priya@fixloop.org",
+    "password_hash": "scrypt:32768:8:1$Oz5UTqkLCr9SbMNF$4b035a82b488f3cca69c5ab7b7959167e00704f70892986650f8a1eb30687c4cb91c44a1dfa004d7a5506e335e585e608cb1da87952db8e0780b2b06ec64c38b",
+    "name": "Priya Patel",
+    "role": "customer",
+    "phone": "+91 98123 45678",
+    "created_at": "2026-09-18T11:30:00Z"
+  },
+  {
+    "id": "usr_shop_1",
+    "email": "shop@fixloop.org",
+    "password_hash": "scrypt:32768:8:1$Oz5UTqkLCr9SbMNF$4b035a82b488f3cca69c5ab7b7959167e00704f70892986650f8a1eb30687c4cb91c44a1dfa004d7a5506e335e585e608cb1da87952db8e0780b2b06ec64c38b",
+    "name": "Rajesh Kumar (Apex Electronics)",
+    "role": "shop",
+    "shop_id": "shp_apex_101",
+    "phone": "+91 99887 76655",
+    "created_at": "2026-08-01T09:00:00Z"
+  },
+  {
+    "id": "usr_shop_2",
+    "email": "protech@fixloop.org",
+    "password_hash": "scrypt:32768:8:1$Oz5UTqkLCr9SbMNF$4b035a82b488f3cca69c5ab7b7959167e00704f70892986650f8a1eb30687c4cb91c44a1dfa004d7a5506e335e585e608cb1da87952db8e0780b2b06ec64c38b",
+    "name": "Vikram Singh (ProTech Clinic)",
+    "role": "shop",
+    "shop_id": "shp_protech_102",
+    "phone": "+91 97766 55443",
+    "created_at": "2026-08-05T09:30:00Z"
+  },
+  {
+    "id": "usr_tech_1",
+    "email": "technician@fixloop.org",
+    "password_hash": "scrypt:32768:8:1$Oz5UTqkLCr9SbMNF$4b035a82b488f3cca69c5ab7b7959167e00704f70892986650f8a1eb30687c4cb91c44a1dfa004d7a5506e335e585e608cb1da87952db8e0780b2b06ec64c38b",
+    "name": "Sanjay Verma",
+    "role": "technician",
+    "shop_id": "shp_apex_101",
+    "phone": "+91 96543 21098",
+    "created_at": "2026-08-10T10:00:00Z"
+  },
+  {
+    "id": "usr_owner_1",
+    "email": "owner@fixloop.org",
+    "password_hash": "scrypt:32768:8:1$Oz5UTqkLCr9SbMNF$4b035a82b488f3cca69c5ab7b7959167e00704f70892986650f8a1eb30687c4cb91c44a1dfa004d7a5506e335e585e608cb1da87952db8e0780b2b06ec64c38b",
+    "name": "Elena Vance (Platform Owner)",
+    "role": "owner",
+    "phone": "+91 90000 11111",
+    "created_at": "2026-01-01T08:00:00Z"
+  },
+  {
+    "id": "USR-506116-4L3",
+    "email": "test_new_user@fixloop.org",
+    "password_hash": "scrypt:32768:8:1$JeQZJYGTHCg0DQkc$b3590bdd0cbb0055a271ece7041ee8746433e02a62264a1980064dc6bcf520ea1d91da9a96af068819f529d8453e3ac2aefa6328c3bbabc9ec38f4fee96983b7",
+    "name": "Test User",
+    "role": "customer",
+    "shop_id": null,
+    "phone": "",
+    "created_at": "2026-10-12T04:48:26.311403Z"
+  },
+  {
+    "id": "USR-017333-8EV",
+    "email": "test_user_1791781017333@fixloop.org",
+    "password_hash": "scrypt:32768:8:1$oTrFZis2qvicJvru$7a17de360bec984e749f0fdb6b1bd5298aee91c3f4dc8926ae5425d833995631298ff273ab27520de162a48cac69e1d1f3c4c3ef0d400673665498b1395e2c94",
+    "name": "Test User",
+    "role": "customer",
+    "shop_id": null,
+    "phone": "",
+    "created_at": "2026-10-12T04:56:57.440085Z"
+  }
+]
