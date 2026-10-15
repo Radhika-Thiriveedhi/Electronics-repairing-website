@@ -1,7 +1,7 @@
 {
   "name": "fixloop",
   "version": "1.0.0",
-  "description": "FixLoop — Repair, Reuse & Service Tracking Platform",
+  "description": "FixLoop - Repair, Reuse & Service Tracking Platform",
   "main": "main.py",
   "scripts": {
     "start": "python main.py",
